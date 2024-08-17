@@ -5,6 +5,9 @@ const categorySchema = new mongoose.Schema({
         required : true,
         type : 'string' 
     },
+    icon : {
+        type : 'string',
+    }
 });
 
 module.exports = mongoose.model('Category', categorySchema);

@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const productRoutes = require('./routes/productRoutes');  // Uncomment this line
+const productRoutes = require('./routes/productRoutes');  
 const errorHandler = require('./middleware/errorHanlder');
 const cors = require('cors');
 const auth = require('./routes/usersRoute') 

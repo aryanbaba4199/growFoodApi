@@ -24,6 +24,13 @@ const orderSchema = new mongoose.Schema({
     },
     date : {
         type : Date,
+    }, 
+    orderStatus : {
+        type : String,
+    },
+    addressId : {
+        type : String,
+        required : true
     }
 
 });

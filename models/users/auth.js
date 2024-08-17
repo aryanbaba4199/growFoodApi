@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 
 const authSchema = new mongoose.Schema({
+  shopName : {
+    required: true,
+    type: 'string',
+  },
   name: {
     required: true,
     type: String,
@@ -21,33 +25,8 @@ const authSchema = new mongoose.Schema({
   mobile: {
     required: true,
     type: String,
-    
   },
-  address: {
-    type: {
-       address : {
-            required: true,
-            type: String,
-       }, 
-      city: {
-        required: true,
-        type: String,
-        
-      },
-      state: {
-        required: true,
-        type: String,
-        
-      },
-      zip: {
-        required: true,
-        type: String,
-        
-      },
-      
-    },
-    required: true,
-  },
+  
   
 });
 
