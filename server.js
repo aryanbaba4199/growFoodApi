@@ -7,11 +7,18 @@ const auth = require('./routes/usersRoute')
 const order = require('./routes/orderRoutes');
 const connectDb = require('./config/db')
 
+require('dotenv').config();
+
+
 const app = express();
 const port = 5000;
 
 // Middleware
-app.use(cors());
+app.use(cors({
+    origin: '*', // Or specify the domains you want to allow
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Specify the methods you want to allow
+    allowedHeaders: ['Content-Type', 'Authorization'], // Specify the headers you want to allow
+  }));
 app.use(bodyParser.json());
 
 // Database
