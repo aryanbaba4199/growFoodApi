@@ -20,7 +20,7 @@ router.get("/:email", authenticateJWT, getUser);
 router.get("/message", authenticateJWT, getUsers);
 router.post("/register", createUser);
 router.put('/updateUser/:id', updateUser);
-router.post("/login",authenticateJWT, loginUser);
+router.post("/login", loginUser);
 router.post("/createAddress", createAddress);
 router.put("/updateAddress/:id", updateAddress);
 router.delete("/deleteAddress/:id", deleteAddress);
