@@ -67,7 +67,7 @@ exports.updateOrder = async (req, res, next) => {
   
 
 exports.createCart = async (req, res, next) => {
-    const {userId, productId} = req.body.data;
+    const {userId, productId} = req.body.data || req.body.formData;
     try{
         const cart = new Cart({userId, productId});
         await cart.save();

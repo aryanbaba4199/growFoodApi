@@ -5,6 +5,7 @@ const errorHandler = require('./middleware/errorHanlder');
 const cors = require('cors');
 const auth = require('./routes/usersRoute') 
 const order = require('./routes/orderRoutes');
+const admin = require('./routes/adminRoutes');
 const connectDb = require('./config/db')
 
 require('dotenv').config();
@@ -28,6 +29,7 @@ connectDb();
 app.use('/api/products', productRoutes);  
 app.use('/api/users', auth)
 app.use('/api/orders', order)
+app.use('/api/admin', admin)
 
 // Handling errors
 app.use(errorHandler);
