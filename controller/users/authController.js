@@ -32,18 +32,22 @@ exports.createUser = async (req, res, next) => {
 
 exports.updateUser = async (req, res, next) => {
   const { id } = req.params;
-  const { shopName, name, mobile } = req.body;
+  const { shopName, name, mobile, image} = req.body.formData;
+
+  console.log(req.body.formData);
 
   try {
+    
  
     const updateData = {};
     if (shopName) updateData.shopName = shopName;
     if (name) updateData.name = name;
     if (mobile) updateData.mobile = mobile;
+    if(image) updateData.image = image;
 
     
     const updatedUser = await User.findByIdAndUpdate(id, updateData, { new: true });
-
+    console.log(updatedUser);
     if (!updatedUser) {
       return res.status(404).json({ message: "User not found" });
     }
@@ -82,10 +86,10 @@ exports.loginUser = async (req, res, next) => {
 };
 
 exports.getUser = async (req, res, next) => {
-  const { email } = req.params;
+  const { id } = req.params;
 
   try {
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ _id : id });
     if (!user) {
       return res.status(404).send('User not found');
     }
@@ -159,7 +163,7 @@ exports.createAddress = async(req, res, next) => {
 };
 
 exports.getAddress = async (req, res, next) => {
-  console.log('user id is ', req.params);
+ 
   try {
     const {id} = req.params;
     console.log("Get Address", id);

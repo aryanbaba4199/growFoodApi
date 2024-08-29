@@ -26,6 +26,9 @@ const authSchema = new mongoose.Schema({
     required: true,
     type: String,
   },
+  image : {
+    type: String,
+  }
   
   
 });

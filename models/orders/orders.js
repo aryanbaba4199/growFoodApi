@@ -31,6 +31,12 @@ const orderSchema = new mongoose.Schema({
     addressId : {
         type : String,
         required : true
+    },
+    status : {
+        type : String,
+    },
+    vendor : {
+        type : String,
     }
 
 });

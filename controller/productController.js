@@ -2,6 +2,7 @@ const Product = require("../models/products/product");
 const Brand = require("../models/products/brandSchema");
 const Category = require("../models/products/categories");
 const product = require("../models/products/product");
+const Unit = require("../models/products/unitSchema");
 
 // Getting Products
 exports.getProducts = async (req, res, next) => {
@@ -53,7 +54,7 @@ exports.createProduct = async (req, res, next) => {
 
     const newProduct = new Product(productData);
     await newProduct.save();
-    res.status(201).json({ message: "Product created successfully" });
+    res.status(200).json({ message: "Product created successfully" });
   } catch (err) {
     console.error(err);
     next(err);
@@ -257,3 +258,26 @@ exports.deleteCategory = async(req, res, next)=>{
     next(err);
   }
 }
+
+exports.createUnit = async(req, res, next) => {
+  console.log(req.body.formData)
+  try{
+    const unit = new Unit({name : req.body.formData});
+    await unit.save();
+    res.status(200).json({message: "Unit saved successfully"});
+
+  }catch(err){
+    console.log("Error creating unit", err);
+    next(err);
+  }
+};
+
+exports.getUnit = async(req, res, next) => {
+  try{
+    const units = await Unit.find();
+    res.status(200).json(units);
+  }catch(err){
+    console.log("Error getting", err);
+    next(err);
+  }
+};

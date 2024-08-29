@@ -23,30 +23,23 @@ exports.createOrder = async(req, res, next) => {
 
 exports.updateOrder = async (req, res, next) => {
     const { id } = req.params;
-    
+
     try {
       const {
-        productId,
-        userId,
-        quantity,
-        paymentId,
-        paymentMode,
-        orderAmount,
-        addressId
-      } = req.body.data;
+        quantity, orderAmount, paymentMode, paymentId, status
+      } = req.body.formData;
   
       // Update the order
       const updatedOrder = await Order.findByIdAndUpdate(
         id, // The ID of the order to update
         {
-          productId,
-          userId,
+          
           quantity,
           paymentId,
           paymentMode,
           orderAmount,
-          addressId,
-          updatedAt: Date.now() // Optional: update the timestamp when the order is updated
+          status,
+          
         },
         { new: true } // Return the updated document
       );

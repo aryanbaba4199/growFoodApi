@@ -16,7 +16,7 @@ const {
 const authenticateJWT = require("../middleware/authMiddleware");
 
 router.get("/me", authenticateJWT, getCurrentUser);
-router.get("/:email", authenticateJWT, getUser);
+router.get("/:email", getUser);
 router.get("/message", authenticateJWT, getUsers);
 router.post("/register", createUser);
 router.put('/updateUser/:id', updateUser);
