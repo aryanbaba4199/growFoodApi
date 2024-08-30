@@ -60,9 +60,9 @@ exports.updateOrder = async (req, res, next) => {
   
 
 exports.createCart = async (req, res, next) => {
-    const {userId, productId} = req.body.data || req.body.formData;
+    const {userId, productId, qty} = req.body.data || req.body.formData;
     try{
-        const cart = new Cart({userId, productId});
+        const cart = new Cart({userId, productId, qty});
         await cart.save();
         console.log('Cart saved successfully');
         res.status(200).json({message : 'Cart Created successfully'});
@@ -124,7 +124,8 @@ exports.getOrder = async ( req, res, next ) => {
 exports.getCart = async (req, res, next) => {
 
     const {id} = req.params;
-    console.log(id);
+
+    
     try{
         const cart = await Cart.find({userId : id});
         console.log('cart uis', cart);
@@ -138,6 +139,8 @@ exports.getCart = async (req, res, next) => {
         next(err);
     }
 };
+
+
 
 
 

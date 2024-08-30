@@ -9,6 +9,9 @@ const cartSchema = new mongoose.Schema({
     type : String,
     required : true
    },
+   qty : {
+      type : Number,
+   }
 });
 
 module.exports = mongoose.model('Cart', cartSchema);

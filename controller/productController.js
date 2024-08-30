@@ -64,6 +64,7 @@ exports.createProduct = async (req, res, next) => {
 exports.updateProduct = async (req, res, next) => {
   const formData = req.body.formData;
   const id = formData._id;
+  console.log("updating product")
 
   try {
     const updatedProduct = await Product.findByIdAndUpdate(
@@ -97,7 +98,7 @@ exports.updateProduct = async (req, res, next) => {
     res.status(200).json({ message: 'Product updated' });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: error.message });
+    next(error);
   }
 };
 
