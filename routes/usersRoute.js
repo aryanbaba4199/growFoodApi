@@ -12,11 +12,11 @@ const {
   updateAddress,
   getAddress,
   updateUser,
+  getAllusers,
 } = require("../controller/users/authController");
 const authenticateJWT = require("../middleware/authMiddleware");
 
 router.get("/me", authenticateJWT, getCurrentUser);
-router.get("/:email", getUser);
 router.get("/message", authenticateJWT, getUsers);
 router.post("/register", createUser);
 router.put('/updateUser/:id', updateUser);
@@ -26,5 +26,8 @@ router.put("/updateAddress/:id", updateAddress);
 router.delete("/deleteAddress/:id", deleteAddress);
 router.get("/getAddress/:id", getAddress);
 router.get("/getDeliveryAddress/:id", getDeliveryAddress);
+router.get("/getallusersforadmin", getAllusers);
+router.get("/:email", getUser);
+
 
 module.exports = router;

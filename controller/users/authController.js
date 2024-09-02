@@ -10,7 +10,7 @@ const Address = require('../../models/users/addressSchema');
 const SECRET_KEY = process.env.JWT_KEY;
 
 exports.createUser = async (req, res, next) => {
-  const {shopName, name, email, password, mobile } = req.body;
+  const {shopName, name, email, password, mobile, userType, shopAddress, gst } = req.body;
 
   try {
     const existingUser = await User.findOne({ email });
@@ -20,7 +20,7 @@ exports.createUser = async (req, res, next) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const newUser = new User({shopName, name, email, password: hashedPassword, mobile});
+    const newUser = new User({shopName, name, email, password: hashedPassword, mobile, shopAddress, gst, userType,});
     await newUser.save();
 
     res.status(200).json({ message: 'User created successfully' });
@@ -32,7 +32,7 @@ exports.createUser = async (req, res, next) => {
 
 exports.updateUser = async (req, res, next) => {
   const { id } = req.params;
-  const { shopName, name, mobile, image} = req.body.formData;
+  const { shopName, name, mobile, image, gst, userType, userStatus, shopAddress} = req.body.formData;
 
   console.log(req.body.formData);
 
@@ -44,6 +44,10 @@ exports.updateUser = async (req, res, next) => {
     if (name) updateData.name = name;
     if (mobile) updateData.mobile = mobile;
     if(image) updateData.image = image;
+    if(gst) updateData.gst = gst;
+    if(userType) updateData.userType = userType;
+    if(userStatus) updateData.userStatus = userStatus;
+    if(shopAddress) updateData.shopAddress = shopAddress;
 
     
     const updatedUser = await User.findByIdAndUpdate(id, updateData, { new: true });
@@ -55,7 +59,7 @@ exports.updateUser = async (req, res, next) => {
     res.status(200).json({ message: "User updated successfully", user: updatedUser });
   } catch (e) {
     console.error(e);
-    res.status(500).json({ message: "Internal server error" });
+    next(e);
   }
 };
 
@@ -230,4 +234,15 @@ exports.deleteAddress = async (req, res, next) => {
   }
 };
 
+
+exports.getAllusers = async (req, res, next) => { 
+  console.log('tri')
+  try{
+    const users = await User.find({});
+    res.status(200).json(users);
+  }catch (err) {
+    console.log(err);
+    next(err);
+  }
+}
 

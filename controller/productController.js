@@ -1,8 +1,9 @@
 const Product = require("../models/products/product");
 const Brand = require("../models/products/brandSchema");
 const Category = require("../models/products/categories");
-const product = require("../models/products/product");
+const SubCategory = require("../models/products/SubCategory");
 const Unit = require("../models/products/unitSchema");
+
 
 // Getting Products
 exports.getProducts = async (req, res, next) => {
@@ -51,6 +52,7 @@ exports.createProduct = async (req, res, next) => {
       let newCategories = new Category({ name: productData.categories });
       await newCategories.save();
     }
+  
 
     const newProduct = new Product(productData);
     await newProduct.save();
@@ -97,6 +99,20 @@ exports.updateProduct = async (req, res, next) => {
     console.log("Product updated");
     res.status(200).json({ message: 'Product updated' });
   } catch (error) {
+    console.error(error);
+    next(error);
+  }
+};
+
+exports.subProduct = async(req, res, next) => {
+  try{
+    const {subCategory} = req.params;
+    console.log(subCategory, "sub");
+    const products = await Product.find({ subCategory: subCategory});
+    if(products){
+      res.status(200).json(products);
+    }
+  }catch (error) {
     console.error(error);
     next(error);
   }
@@ -282,3 +298,30 @@ exports.getUnit = async(req, res, next) => {
     next(err);
   }
 };
+
+
+//----------------------------Sub Category----------------------------------------
+
+exports.CreateSubCategory = async(req, res, next) => {
+  try{
+    const {formData} = req.body
+    const item = new SubCategory({
+      name : formData.name,
+    })
+    await item.save();
+    res.status(200).json(item);
+  }catch(err){
+    console.log("Error getting", err);
+    next(err);
+  }
+}  
+
+exports.getSubCategory = async(req, res, next) => {
+  try{
+    const subCategory = await SubCategory.find({});
+    res.status(200).json(subCategory);
+  }catch(err){
+    console.log("Error getting", err);
+    next(err);
+  }
+}
