@@ -81,6 +81,7 @@ exports.updateProduct = async (req, res, next) => {
           image: formData.image,
           discount: formData.discount,
           price: formData.price,
+          display : formData.display ?? true,
           sellingPrice: formData.sellingPrice,
           productQty: formData.productQty,
           minimumOrderQty: formData.minimumOrderQty,
@@ -96,7 +97,7 @@ exports.updateProduct = async (req, res, next) => {
       console.log("Product not found");
       return res.status(404).json({ message: 'Product not found' });
     }
-    console.log("Product updated");
+    console.log("Product updated", updatedProduct);
     res.status(200).json({ message: 'Product updated' });
   } catch (error) {
     console.error(error);

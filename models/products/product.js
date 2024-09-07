@@ -20,6 +20,9 @@ const productSchema = mongoose.Schema({
         type : String,
         required: true,
     },
+    display : {
+        type : Boolean,
+    },
     subCategory : {
         type : String,
     },
