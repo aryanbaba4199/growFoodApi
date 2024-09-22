@@ -6,7 +6,7 @@ const connectDb = async() => {
     try{
         // const connection = await mongoose.connect('mongodb://localhost:27017/growFood',)
         const connection = await mongoose.connect(MONGODB_URI,)
-        console.log("Connected to Database ");
+        console.log("Connected to Database " ,connection);
     }catch(e){
         console.error("Error connecting to Database ", e);
         process.exit(1);
