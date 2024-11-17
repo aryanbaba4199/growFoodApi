@@ -8,7 +8,7 @@ exports.createOrder = async (req, res, next) => {
     const istDate = dateFns.format(date, "yyyy-MM-dd HH:mm:ss", {
       timeZone: "Asia/Kolkata",
     });
-    const orders = req.body.orders; // Array of orders
+    const orders = req.body.formData; // Array of orders
 
     // Save all orders
     const orderPromises = orders.map(async (orderData) => {
@@ -88,7 +88,7 @@ exports.updateOrder = async (req, res, next) => {
 };
 
 exports.createCart = async (req, res, next) => {
-  const { userId, productId, qty } = req.body.data || req.body.formData;
+  const { userId, productId, qty } = req.body;
   try {
     const cart = new Cart({ userId, productId, qty });
     await cart.save();

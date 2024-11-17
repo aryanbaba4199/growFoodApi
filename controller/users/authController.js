@@ -75,14 +75,13 @@ exports.loginUser = async (req, res, next) => {
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
-    console.log(isPasswordValid);
     if (!isPasswordValid) {
       return res.status(401).send('Invalid Password');
     }
 
     const token = jwt.sign({ id: user._id, email: user.email }, SECRET_KEY, { expiresIn: '8760h' });
 
-    res.status(200).json({ token });
+    res.status(200).json({ token, user });
   } catch (error) {
     console.error('loginUser error:', error);
     next(error);
@@ -144,8 +143,8 @@ exports.getCurrentUser = async (req, res, next) => {
 
 exports.createAddress = async(req, res, next) => {
   try{
-    const {formData} = req.body;
-    const address = formData || req.body.address;
+    const formData = req.body;
+    const address = formData;
     console.log("Create Address", address)
     const newAdddress = new Address({
       userId : address.userId,
