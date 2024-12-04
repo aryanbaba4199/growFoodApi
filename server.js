@@ -16,9 +16,9 @@ const port = 5000;
 
 // Middleware
 app.use(cors({
-    origin: '*', // Or specify the domains you want to allow
-    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Specify the methods you want to allow
-    allowedHeaders: ['Content-Type', 'Authorization'], // Specify the headers you want to allow
+    origin: '*', 
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], 
+    allowedHeaders: ['Content-Type', 'Authorization'],
   }));
 app.use(bodyParser.json());
 

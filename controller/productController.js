@@ -3,18 +3,36 @@ const Brand = require("../models/products/brandSchema");
 const Category = require("../models/products/categories");
 const SubCategory = require("../models/products/SubCategory");
 const Unit = require("../models/products/unitSchema");
+const product = require("../models/products/product");
 
 
 // Getting Products
 exports.getProducts = async (req, res, next) => {
   try {
-    const products = await Product.find();
-    res.status(200).json(products);
+    const {page} = req.params || 1; // Default to page 1
+    const limit = parseInt(req.query.limit) || 2; // Default to 50 products per page
+    const skip = (page - 1) * limit; // Calculate the number of items to skip
+
+    const products = await Product.find().skip(skip).limit(limit);
+    const totalProducts = await Product.countDocuments();
+
+    res.status(200).json({
+      success: true,
+      data: products,
+      pagination: {
+        total: totalProducts,
+        page,
+        limit,
+        totalPages: Math.ceil(totalProducts / limit),
+        hasNextPage: page * limit < totalProducts,
+      },
+    });
   } catch (err) {
     console.error(err);
     next(err);
   }
 };
+
 
 exports.getProduct = async (req, res, next) => {
   const { id } = req.params;
@@ -326,3 +344,50 @@ exports.getSubCategory = async(req, res, next) => {
     next(err);
   }
 }
+
+// -------------Search controller --------------------------------
+
+exports.searchController = async (req, res, next) => {
+  const { query } = req.query;
+  if (!query) {
+    return res.status(400).json({ message: "Query parameter is required" });
+  }
+
+  try {
+    const products = await Product.find({
+      $or: [
+        { brand: { $regex: query, $options: "i" } },
+        { categories: { $regex: query, $options: "i" } },
+        { name: { $regex: query, $options: "i" } },
+      ],
+    }).limit(10);
+
+    // Attach type to the results
+    const resultWithTypes = products.map((product) => ({
+      ...product.toObject(),
+      type: "product", // Marking this as a product
+    }));
+
+    const allResults = [
+      ...resultWithTypes,
+    ];
+
+    return res.status(200).json(allResults);
+  } catch (err) {
+    console.error("Error in Searching:", err);
+    return res.status(500).json({ message: "Internal Server Error", error: err.message });
+  }
+};
+
+exports.categoriesProduct = async(req, res, next)=>{
+  const {category} = req.params;
+  console.log(category);
+  try{
+    const products = await Product.find({categories : category})
+    res.status(200).json(products);
+  }catch(err){
+    console.error("Error in Searching:", err);
+    res.status(500).json({ message: "Internal Server Error", error: err.message });
+  }
+}
+

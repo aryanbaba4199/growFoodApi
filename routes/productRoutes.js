@@ -6,6 +6,7 @@ const {
   getProducts,
   createProduct,
   getBrands,
+  searchController,
   getCategories,
   getProduct,
   updateProduct,
@@ -16,17 +17,19 @@ const {
   deleteProduct,
   deleteCategory,
   updateCategory,
-  createUnit, getUnit, subProduct, CreateSubCategory, getSubCategory
+  createUnit, getUnit, subProduct, CreateSubCategory, getSubCategory, categoriesProduct
 } = require("../controller/productController"); // Make sure the path is correct
 
 
 // ---------------Products Routes --------------------
-router.get("/", getProducts);
+router.get("/product/:page", getProducts);
 router.get("/product/:id", getProduct);
 router.put("/updateProduct", updateProduct);
 router.delete("/deleteProduct/:id", deleteProduct);
 router.post("/", createProduct);
 router.get("/subProduct/:subCategory", subProduct)
+router.get('/search/searchInDatabase', searchController)
+router.get('/categoriesProduct/:category', categoriesProduct)
 
 
 // _____________________Brand Routes______________________
